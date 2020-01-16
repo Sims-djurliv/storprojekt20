@@ -3,7 +3,7 @@
 # Bedömningsshandledning Webbserverprogrammering 1
 
 ## Matris
-
+bs
 | Aspekt         | E                                                            | C                                                            | A                                                            |
 | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Dokumentation  | Tillsammans med läraren dokumenterar du **översiktligt** din applikations funktionalitet, utvecklingsprocess och säkerhet och använder **med viss säkerhet *enkel*** terminologi. | Med läraren som bollplank dokumenterar du **utförligt** din applikations funktionalitet, utvecklingsprocess och säkerhet och använder **med viss säkerhet** ***korrekt*** terminologi. | Med läraren som bollplank dokumenterar du **utförligt  och nyanserat** din applikations funktionalitet, utvecklingsprocess och säkerhet och **använder med säkerhet *korrekt*** terminologi. |

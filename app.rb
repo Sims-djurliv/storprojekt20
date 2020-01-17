@@ -20,8 +20,8 @@ post('/login') do
     session[:user_id] = db.execute("SELECT id FROM users WHERE username = ?;", username).first["id"]
 
 
-    if BCrypt::Password.new(pwdhash[0]["password_digest"]) == password
-        redirect("/valid")
+    if BCrypt::Password.new(pwdhash[0]["Password_digest"]) == password
+        slim(:log_in)
     else
         redirect("/Invalid")
     end
@@ -33,14 +33,11 @@ post('/register')do
    
     pwdhash = BCrypt::Password.create(params['password'])
 
-    db.execute("INSERT INTO users(username, password_digest) VALUES(?, ?);", params['username'], pwdhash)
+    db.execute("INSERT INTO users(username, Password_digest) VALUES(?, ?);", params['username'], pwdhash)
 
     redirect("/")
 end
 
-get('/valid')do
-    
-    db = SQLite3::Database.new("db/slut-proj.db")
-
-    slim(:log_in)
+post('/create')do
+    slim(:register)
 end

@@ -1,0 +1,63 @@
+.h-grid{
+    /* grid-area: header; */
+    background:lightslategray;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas: 
+  ". . . . user";
+    grid-template-rows: 50px;
+}
+.index-grid{
+    background: transparent;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-areas: 
+  ". . . . . . . . ."
+  ". . . h1 h1 h1 . . ."
+  ". . . . . . . . ."
+  ". . . login . . . . ."
+  ". . . . . . . . ."
+  ". . . p register . . . ."
+  ". . . . . . . . .";
+    grid-template-rows:100px auto 50px auto 30px auto 100px;
+}
+.login{
+    grid-area: login;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-areas: 
+  ". . . user-l . . . . ."
+  ". . . . . . . . ."
+  ". . . password . . . . ."
+  ". . . . . . . . ."
+  ". . . submit . . . . .";
+    grid-template-rows: auto 30px auto 30px auto;
+}
+.user{
+    color: black;
+    grid-area: user;
+    align-items: center;
+    justify-content: center;
+}
+.index-grid h1{
+    grid-area: h1;
+}
+.index-grid p{
+    grid-area: p;
+}
+.login #user{
+    grid-area: user-l;
+    border-radius: 10px;
+}
+.login #password{
+    grid-area: password;
+    border-radius: 10px;
+}
+.login #submit{
+    grid-area: submit;
+    border-radius: 10px;
+}
+.register{
+    grid-area: register;
+    margin-top: 13px;
+}

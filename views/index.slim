@@ -1,13 +1,13 @@
-h1 Welcome to das slutprojekt
+.index-grid
+    h1 Welcome to GVKK crag
 
-h2 log in
-form action="/login" method="post"
-    input type="text" name="username"
-    input type="text" name="password" 
-    input type="submit" Value="Login"
+    form.login action="/login" method="post"
+        input id="user" type="text" name="username" placeholder="username"
+        input id="password" type="text" name="password" placeholder="password"
+        input id="submit" type="submit" Value="Sign in" 
 
-h2 Create account
-form action="/register" method="post"
-    input type="text" name="username"
-    input type="text" name="password"
-    input type="submit" Value="Create account"
+    p Don't have an account? ,   
+
+    form.register action="/create" method="post"
+        input type="submit" value="click here"
+        

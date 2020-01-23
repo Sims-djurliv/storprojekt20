@@ -1,7 +1,7 @@
 .index-grid
     h1 Welcome to GVKK crag
 
-    form.login action="/login" method="post"
+    form.login action="/login" method="post" autocomplete="off"
         input id="user" type="text" name="username" placeholder="username"
         input id="password" type="text" name="password" placeholder="password"
         input id="submit" type="submit" Value="Sign in" 
@@ -10,4 +10,6 @@
 
     form.register action="/create" method="post"
         input type="submit" value="click here"
-        
+
+form action="/wipe_user" method="post"
+    input type="submit" value="wipe all users"

@@ -1,2 +1,57 @@
+
 header.h-grid
     p.user signed in as: #{session[:username]}
+
+form action="/logg/#{session[:user_id]}/new" method="post"
+    input type="text" name="logg" placeholder="Route Name"
+    input type="text" name="about_text" placeholder="info about send"
+    select name="grade"
+        option value="5+"5+
+        option value="6a"6a
+        option value="6a+"6a+
+        option value="6b"6b
+        option value="6b+"6b+
+        option value="6c"6c
+        option value="6c+"6c+
+        option value="7a"7a
+        option value="7a+"7a+
+        option value="7b"7b
+        option value="6b+"7b+
+        option value="7c"7c
+        option value="7c+"7c+
+        option value="8a"8a
+        option value="8a+"8a+
+        option value="8b"8b
+        option value="8b+"8b+
+        option value="8c"8c
+        option value="8c+"8c+
+        option value="9a"9a
+        option value="9a+"9a+
+        option value="9b"9b
+        option value="9b+"9b+
+        option value="9c"9c
+    select name="rating"
+        option value="1"1
+        option value="2"2
+        option value="3"3
+        option value="4"4
+        option value="5"5
+        option value="6"6
+        option value="7"7
+        option value="8"8
+        option value="9"9
+        option value="10"10
+    input type="submit" Value="Submit new accent"   
+
+
+- if accent != nil
+    - accent.each do |item|
+        .all-gridd
+        .post
+            h1 = item[2]
+            p = item[3]
+            p = "Grade: #{item[4]}"
+            p = "Rating: #{item[5]}/10"
+            .right
+                form action="/lists/#{item[1]}/delete" method="post"
+                    button type="submit" delete

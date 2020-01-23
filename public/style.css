@@ -1,11 +1,27 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.all-gridd{
+    background:#eee;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.post {
+    margin: auto;
+    width: 40vw;
+    background: #ccc;
+}
+
 .h-grid{
-    /* grid-area: header; */
+    grid-area: header;
     background:lightslategray;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 
   ". . . . user";
-    grid-template-rows: 50px;
+    grid-template-rows: 100px;
 }
 .index-grid{
     background: transparent;
@@ -19,7 +35,7 @@
   ". . . . . . . . ."
   ". . . p register . . . ."
   ". . . . . . . . .";
-    grid-template-rows:100px auto 50px auto 30px auto 100px;
+    grid-template-rows:100px auto 50px auto 50px auto 100px;
 }
 .login{
     grid-area: login;
@@ -33,17 +49,31 @@
   ". . . submit . . . . .";
     grid-template-rows: auto 30px auto 30px auto;
 }
+.error{
+    margin-top: 200px;
+    margin-left: 400px;
+    display: block;
+    height: 150px;
+    width: 700px;
+    background: rgb(255, 148, 148);
+    text-align: center;
+    align-items: center;
+    padding-top: 50px;
+    border: rgb(59, 59, 59) solid 5px;
+    border-radius: 20px;
+}
 .user{
     color: black;
     grid-area: user;
-    align-items: center;
-    justify-content: center;
+    margin-top: 40px;
 }
 .index-grid h1{
     grid-area: h1;
 }
 .index-grid p{
     grid-area: p;
+    color: rgb(104, 104, 104);
+    font-size: 15px;
 }
 .login #user{
     grid-area: user-l;

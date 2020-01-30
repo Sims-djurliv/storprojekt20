@@ -10,17 +10,25 @@ body{
 
 .post {
     margin: auto;
-    width: 40vw;
+    margin-top: 30px;
+    padding: 20px;
+    width: 60vw;
     background: #ccc;
+    border-radius: 20px;
 }
-
+.post p.text{
+    margin-top: 0;
+}
+.post h1{
+    margin-bottom: 0;
+}
 .h-grid{
     grid-area: header;
     background:lightslategray;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 
-  ". . . . user";
+  "home my-page . . user";
     grid-template-rows: 100px;
 }
 .index-grid{
@@ -62,6 +70,31 @@ body{
     border: rgb(59, 59, 59) solid 5px;
     border-radius: 20px;
 }
+a.home{
+    grid-area: home;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+a.home:hover{
+    background: rgb(98, 112, 126);
+}
+a.my_page{
+    grid-area: my-page;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+a.my_page:hover{
+    background: rgb(98, 112, 126);
+}
 .user{
     color: black;
     grid-area: user;
@@ -90,4 +123,9 @@ body{
 .register{
     grid-area: register;
     margin-top: 13px;
+}
+.post img{
+    width: 200px;
+    height: 200px;
+    
 }

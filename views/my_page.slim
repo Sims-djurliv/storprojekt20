@@ -1,0 +1,19 @@
+header.h-grid
+    a.home href="/valid" Home
+    a.my_page href="/my_page" My page
+    p.user signed in as: #{session[:username]}
+
+- if accent != nil 
+    - accent.each do |item|
+        - if session[:user_id] == item[0]
+            .all-gridd
+            .post
+                h1 = item[2]
+                p.text = item[3]
+                img src="/img/berg.jpg" alt="bild"
+                p = "posted by: #{db.execute("SELECT username FROM users WHERE id = ?;", item[0]).first[0]}"
+                p = "Grade: #{item[4]} --------------------- Rating: #{item[5]}/10"
+                .right
+                - if session[:user_id] == item[0]
+                    form action="/lists/#{item[1]}/delete" method="post"
+                        button type="submit" delete

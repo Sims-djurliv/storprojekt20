@@ -1,8 +1,9 @@
-
 header.h-grid
+    a.home href="/valid" Home
+    a.my_page href="/my_page" My page
     p.user signed in as: #{session[:username]}
 
-form action="/logg/#{session[:user_id]}/new" method="post"
+form action="/logg/#{session[:user_id]}/new" method="post" enctype="multipart/form-data"
     input type="text" name="logg" placeholder="Route Name"
     input type="text" name="about_text" placeholder="info about send"
     select name="grade"
@@ -43,15 +44,21 @@ form action="/logg/#{session[:user_id]}/new" method="post"
         option value="10"10
     input type="submit" Value="Submit new accent"   
 
-
 - if accent != nil
     - accent.each do |item|
         .all-gridd
         .post
             h1 = item[2]
-            p = item[3]
-            p = "Grade: #{item[4]}"
-            p = "Rating: #{item[5]}/10"
+            p.text = item[3]
+
+            form action="/upload" method="post" enctype="multipart/form-data"
+                input type="file" name="file" placeholder="select file"
+                input type="submit" value="submit image"
+                
+            img src="/img/berg.jpg" alt="bild"
+            p = "posted by: #{db.execute("SELECT username FROM users WHERE id = ?;", item[0]).first[0]}"
+            p = "Grade: #{item[4]} --------------------- Rating: #{item[5]}/10"
             .right
+            - if session[:user_id] == item[0]
                 form action="/lists/#{item[1]}/delete" method="post"
                     button type="submit" delete

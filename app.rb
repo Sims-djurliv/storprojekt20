@@ -49,15 +49,29 @@ post('/login') do
 end
 
 get('/valid')do
-    
+    if(!session[:user_id])
+        redirect("/")
+    end
     # db = SQLite3::Database.new("db/slut-proj.db")
-    db.results_as_hash = true
-    result = db.execute("SELECT routes FROM accents")
-    #item_id = db.execute("SELECT post_id FROM accents")
+    #db.results_as_hash = true
+    #result = db.execute("SELECT routes FROM accents")
+    #item_id = db.execute("SELECT post_ id FROM accents")
     halli = db.execute("SELECT * FROM accents")
-
     slim(:log_in, locals:{accent:halli})
 end
+
+get('/my_page')do
+
+    halli = db.execute("SELECT * FROM accents")
+    slim(:my_page, locals:{accent:halli})
+end
+
+            post('/upload')do
+                image =  params["file"]
+                db.execute("INSERT INTO accents(image) VALUES(?);", image)
+
+                redirect('/valid')
+            end
 
 post('/logg/:id/new')do
 
@@ -84,10 +98,14 @@ end
 
 post('/register')do
     # db = SQLite3::Database.new("db/slut-proj.db")
+    if params['password'].length || params['username'].length == 0
+        slim(:error)
+    end
    
     pwdhash = BCrypt::Password.create(params['password'])
 
     db.execute("INSERT INTO users(username, Password_digest) VALUES(?, ?);", params['username'], pwdhash)
+    
 
     redirect("/")
 end

@@ -3,7 +3,7 @@ header.h-grid
     a.my_page href="/my_page" My page
     p.user signed in as: #{session[:username]}
 
-form action="/logg/#{session[:user_id]}/new" method="post" enctype="multipart/form-data"
+form action="/logg/#{session[:user_id]}/new" method="post" 
     input type="text" name="logg" placeholder="Route Name"
     input type="text" name="about_text" placeholder="info about send"
     select name="grade"
@@ -51,11 +51,12 @@ form action="/logg/#{session[:user_id]}/new" method="post" enctype="multipart/fo
             h1 = item[2]
             p.text = item[3]
 
-            form action="/upload" method="post" enctype="multipart/form-data"
+            form action="/upload" method="post" enctype="multipart/form-data" accept="image/*" 
                 input type="file" name="file" placeholder="select file"
                 input type="submit" value="submit image"
-                
-            img src="/img/berg.jpg" alt="bild"
+
+            img src="/uploads/#{session[:name]}" alt="bild"
+
             p = "posted by: #{db.execute("SELECT username FROM users WHERE id = ?;", item[0]).first[0]}"
             p = "Grade: #{item[4]} --------------------- Rating: #{item[5]}/10"
             .right

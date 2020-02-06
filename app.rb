@@ -2,6 +2,7 @@ require 'sinatra'
 require 'slim'
 require 'sqlite3'
 require 'bcrypt'
+require 'fileutils'
 
 enable :sessions
 
@@ -56,6 +57,7 @@ get('/valid')do
     #db.results_as_hash = true
     #result = db.execute("SELECT routes FROM accents")
     #item_id = db.execute("SELECT post_ id FROM accents")
+
     halli = db.execute("SELECT * FROM accents")
     slim(:log_in, locals:{accent:halli})
 end
@@ -66,12 +68,22 @@ get('/my_page')do
     slim(:my_page, locals:{accent:halli})
 end
 
-            post('/upload')do
-                image =  params["file"]
-                db.execute("INSERT INTO accents(image) VALUES(?);", image)
+post('/upload')do
+    image = params["file"]
+    name = image["filename"]
+    session[:name] = name
+    
+    tempfile = params[:file][:tempfile]
+    filename = params[:file][:filename] 
+    
+    path = "./public/uploads/#{filename}"
 
-                redirect('/valid')
-            end
+    File.open(path, 'wb')do |f|
+        f.write(tempfile.read)
+    end
+
+    redirect('/valid')
+end
 
 post('/logg/:id/new')do
 

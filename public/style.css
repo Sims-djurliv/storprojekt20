@@ -28,7 +28,7 @@ body{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 
-  "home my-page . . user";
+  "home my-page . admin user";
     grid-template-rows: 100px;
 }
 .index-grid{
@@ -95,6 +95,32 @@ a.my_page{
 a.my_page:hover{
     background: rgb(98, 112, 126);
 }
+.admin{
+    grid-area: admin;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+  "admin_only lock";
+}
+.admin a{
+    grid-area: admin_only;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin-left: 20px;
+}
+.admin img{
+    grid-area: lock;
+    width: 35px;
+    height: 35px;
+    margin-top: 28px;
+}
+.admin:hover{
+    background: rgb(98, 112, 126);
+}
 .user{
     color: black;
     grid-area: user;
@@ -129,3 +155,6 @@ a.my_page:hover{
     height: 200px;
     
 }
+textarea{
+     resize: none;
+ }

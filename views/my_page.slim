@@ -1,7 +1,17 @@
 header.h-grid
     a.home href="/valid" Home
     a.my_page href="/my_page" My page
+    .admin
+        - if session[:admin_pic] == "lock.png"
+            a href="#" Admin only
+        - elsif session[:admin_pic] == "unlock.png"
+            a href="/admin" Admin only
+        img src="/img/#{session[:admin_pic]}" alt="lock"
     p.user signed in as: #{session[:username]}
+
+/img src="" alt=""/
+/h3 = "name: #{session[:username]}"
+/h3 = "posts made: #{session[:amount_of_posts]}"
 
 - if accent != nil 
     - accent.each do |item|
@@ -10,10 +20,19 @@ header.h-grid
             .post
                 h1 = item[2]
                 p.text = item[3]
-                img src="/img/berg.jpg" alt="bild"
-                p = "posted by: #{db.execute("SELECT username FROM users WHERE id = ?;", item[0]).first[0]}"
+
+                - if session[:user_id] == item[0]
+                    form action="/upload/#{item[1]}" method="post" enctype="multipart/form-data" accept="image/*" 
+                        input type="file" name="file" placeholder="select file"
+                        input type="submit" value="submit image"
+
+                img src="/uploads/#{item[6]}" alt="bild"
+
+                p = "posted by: #{select_correct_username(item[0])}"
                 p = "Grade: #{item[4]} --------------------- Rating: #{item[5]}/10"
-                .right
+                
+                
+
                 - if session[:user_id] == item[0]
                     form action="/lists/#{item[1]}/delete" method="post"
                         button type="submit" delete

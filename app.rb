@@ -3,6 +3,7 @@ require 'slim'
 require 'sqlite3'
 require 'bcrypt'
 require 'fileutils'
+require_relative './model.rb'
 
 enable :sessions
 
@@ -23,7 +24,9 @@ post('/login') do
     username = params["username"]
     password = params["password"]
 
-    user_array = db.execute("SELECT username FROM users")
+    session[:username] = username
+
+    user_array = select_all_users()
 
     if user_array != nil
         user_array.each do |item|
@@ -34,10 +37,10 @@ post('/login') do
     end
     
     if user_exists == true
-        pwdhash = db.execute("SELECT password_digest FROM users WHERE username = ?;", username)
-        session[:username] = username
 
-        session[:user_id] = db.execute("SELECT id FROM users WHERE username = ?;", username).first[0]
+        pwdhash = get_pwd_hash_from_user(username)
+        
+        session[:user_id] = select_userId_from_user(username)
 
         if BCrypt::Password.new(pwdhash[0][0]) == password
             redirect('/valid')
@@ -49,32 +52,55 @@ post('/login') do
     end
 end
 
+get('/admin')do
+
+    users = get_all_user_content
+    p users
+    slim(:admin, locals:{users:users})
+end
+
 get('/valid')do
     if(!session[:user_id])
         redirect("/")
     end
-    # db = SQLite3::Database.new("db/slut-proj.db")
-    #db.results_as_hash = true
-    #result = db.execute("SELECT routes FROM accents")
-    #item_id = db.execute("SELECT post_ id FROM accents")
 
-    halli = db.execute("SELECT * FROM accents")
-    slim(:log_in, locals:{accent:halli})
+    if "#{check_admin(session[:username])[0][0]}" == "1"
+        session[:admin_pic] = "unlock.png"
+    else
+        session[:admin_pic] = "lock.png"
+    end
+    
+    accent_content = get_all_accent_content()
+    slim(:log_in, locals:{accent:accent_content})
 end
 
 get('/my_page')do
 
-    halli = db.execute("SELECT * FROM accents")
-    slim(:my_page, locals:{accent:halli})
+    amount_of_posts = 0
+
+    a_content = get_all_accent_content
+
+    a_content.each do |element|
+        if element[0] == session[:user_id]
+            amount_of_posts += 1
+        end
+    end
+    session[:amount_of_posts] = amount_of_posts
+
+    accent_content = get_all_accent_content()
+    slim(:my_page, locals:{accent:accent_content})
 end
 
-post('/upload')do
+post('/upload/:post_id')do
     image = params["file"]
     name = image["filename"]
+    post_id = params["post_id"]
     session[:name] = name
     
     tempfile = params[:file][:tempfile]
     filename = params[:file][:filename] 
+
+    update_put_in_pic_name(name, post_id)
     
     path = "./public/uploads/#{filename}"
 
@@ -93,7 +119,7 @@ post('/logg/:id/new')do
     grade = params["grade"]
     rating = params["rating"]
     
-    db.execute("INSERT INTO accents(user_id, routes, about, grade, rating) VALUES(?, ?, ?, ?, ?);", user_id, route, about, grade, rating)
+    make_new_post(user_id, route, about, grade, rating)
 
     redirect('/valid')
 end
@@ -103,9 +129,18 @@ post('/lists/:id/delete')do
     post_id = params["id"]
     # db = SQLite3::Database.new("db/slut-proj.db")
 
-    db.execute("DELETE FROM accents WHERE post_id = ?;", post_id)
+    delete_post(post_id)
 
     redirect('/valid')
+end
+
+post('/user/:id/delete')do
+
+    user_id = params["id"]
+
+    delete_user(user_id)
+
+    redirect('/admin')
 end
 
 post('/register')do
@@ -116,21 +151,30 @@ post('/register')do
    
     pwdhash = BCrypt::Password.create(params['password'])
 
-    db.execute("INSERT INTO users(username, Password_digest) VALUES(?, ?);", params['username'], pwdhash)
+    register_user(params['username'], pwdhash)
     
-
     redirect("/")
 end
 
 post('/wipe_user')do
     # db = SQLite3::Database.new("db/slut-proj.db")
 
-    user_array = db.execute("SELECT username FROM users")
+    user_array = find_users_for_delete
     
     if user_array != nil
-        db.execute("DELETE FROM users")
+        delete_from_users
     end
-    redirect('/')
+    redirect('/admin')
+end
+
+post('/wipe_post')do
+
+    post_array = find_posts_for_delete
+        
+    if post_array != nil
+        delete_from_post
+    end
+    redirect('/admin')
 end
 
 post('/create')do

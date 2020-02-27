@@ -1,0 +1,23 @@
+header.h-grid
+    a.home href="/valid" Home
+    a.my_page href="/my_page" My page
+    .admin
+        a href="/admin" Admin only
+        img src="/img/unlock.png" alt="lock"
+    p.user signed in as: #{session[:username]}
+    
+form action="/wipe_post" method="post"
+    input type="submit" value="wipe all posts"
+
+form action="/wipe_user" method="post"
+    input type="submit" value="wipe all users"
+
+- if users != nil
+    - users.each do |item|
+        hr
+        p = "user: #{item[1]}"
+        form action="/user/#{item[0]}/delete" method="post"
+            button type="submit" delete user
+        
+           
+

@@ -3,11 +3,13 @@ header.h-grid
     a.my_page href="/my_page" My page
     .admin
         - if session[:admin_pic] == "lock.png"
-            a href="#" Admin only
+            a href="#" Admin 
         - elsif session[:admin_pic] == "unlock.png"
-            a href="/admin" Admin only
+            a href="/admin" Admin
         img src="/img/#{session[:admin_pic]}" alt="lock"
-    p.user signed in as: #{session[:username]}
+    .right-side
+        p.user signed in as: #{session[:username]}
+        a.logout href="/logout" Logout
 
 /img src="" alt=""/
 /h3 = "name: #{session[:username]}"

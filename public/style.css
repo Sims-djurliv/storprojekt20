@@ -1,6 +1,7 @@
 body{
     margin: 0;
     padding: 0;
+    background: whitesmoke;
 }
 .all-gridd{
     background:#eee;
@@ -28,7 +29,7 @@ body{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 
-  "home my-page . admin user";
+  "home my-page . admin right-side";
     grid-template-rows: 100px;
 }
 .index-grid{
@@ -56,6 +57,13 @@ body{
   ". . . . . . . . ."
   ". . . submit . . . . .";
     grid-template-rows: auto 30px auto 30px auto;
+}
+.right-side{
+    grid-area: right-side;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+  "user logout";
 }
 .error{
     margin-top: 200px;
@@ -157,4 +165,10 @@ a.my_page:hover{
 }
 textarea{
      resize: none;
- }
+}
+a.logout{
+    grid-area: logout;
+    text-decoration: none;
+    color: black;
+   margin-top: 40px;
+}

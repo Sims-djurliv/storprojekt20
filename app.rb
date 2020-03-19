@@ -52,10 +52,13 @@ post('/login') do
     end
 end
 
+get('/logout')do
+    slim(:index)
+end
+
 get('/admin')do
 
     users = get_all_user_content
-    p users
     slim(:admin, locals:{users:users})
 end
 
@@ -69,9 +72,10 @@ get('/valid')do
     else
         session[:admin_pic] = "lock.png"
     end
-    
+
+    comment_content = get_all_comment_content()
     accent_content = get_all_accent_content()
-    slim(:log_in, locals:{accent:accent_content})
+    slim(:log_in, locals:{accent:accent_content, comment:comment_content})
 end
 
 get('/my_page')do
@@ -179,4 +183,14 @@ end
 
 post('/create')do
     slim(:register)
+end
+
+post('/comment/:post_id')do
+
+    content = params["comment"]
+    post_id = params["post_id"]
+
+    insert_a_comment(content,post_id)
+
+    redirect('/valid')
 end

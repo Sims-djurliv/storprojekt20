@@ -18,6 +18,10 @@ def get_all_user_content
     db.execute("SELECT * FROM users")
 end
 
+def get_all_comment_content
+    db.execute("SELECT * FROM comments")
+end
+
 def update_put_in_pic_name(name, post_id)
     db.execute("UPDATE accents SET image = ? WHERE post_id = ?;", name, post_id)
 end
@@ -60,4 +64,8 @@ end
 
 def delete_user(user_id)
     db.execute("DELETE FROM users WHERE id = ?;", user_id)
+end
+
+def insert_a_comment(content,post_id)
+    db.execute("INSERT INTO comments(content,post_id,user_id) VALUES(?, ?, ?);", content, post_id, session[:user_id])
 end

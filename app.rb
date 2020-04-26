@@ -7,14 +7,22 @@ require_relative './model.rb'
 
 enable :sessions
 
+# makes db variable
 def db
     SQLite3::Database.new("db/slut-proj.db")
 end
 
+# Landing page
+#
 get('/') do
     slim(:index)
 end
 
+# Checks entered username and password to database
+#
+# @param[String] username, the username entered
+# @param[String] password, the password entered
+#
 post('/login') do
     user_array = []
     user_exists = false
@@ -52,10 +60,14 @@ post('/login') do
     end
 end
 
+# Logs you out from your account
+#
 get('/logout')do
     slim(:index)
 end
 
+# Accesses admin page, with all posts info
+#
 get('/admin')do
 
     posts = get_all_accent_content
@@ -63,6 +75,8 @@ get('/admin')do
     slim(:admin, locals:{users:users, posts:posts})
 end
 
+# validated admin and login user 
+#
 get('/valid')do
     if(!session[:user_id])
         redirect("/")
@@ -79,6 +93,8 @@ get('/valid')do
     slim(:log_in, locals:{accent:accent_content, comment:comment_content})
 end
 
+# enters my_page, brings post info
+#
 get('/my_page')do
 
     amount_of_posts = 0
@@ -97,6 +113,12 @@ get('/my_page')do
     slim(:my_page, locals:{accent:accent_content, comment:comment_content})
 end
 
+# uploads pictures to tempfile
+#
+# @param[File] file, the image uploaded
+# @param[String] filename, the image name
+# @param[Integer] post_id, post where uploaded
+#
 post('/upload/:post_id')do
     image = params["file"]
     name = image["filename"]
@@ -117,6 +139,14 @@ post('/upload/:post_id')do
     redirect('/valid')
 end
 
+# Makes new post
+#
+# @param[String] logg, name of route
+# @param[Integer] id, user_id
+# @param[String] about_text, post description
+# @param[String] grade, route grade
+# @param[Integer] rating, route rating
+#
 post('/logg/:id/new')do
 
     route = params["logg"]
@@ -130,16 +160,23 @@ post('/logg/:id/new')do
     redirect('/valid')
 end
 
+# delete post
+#
+# @param[Integer] id, post_id to delete
+#
 post('/lists/:id/delete')do
 
     post_id = params["id"]
-    # db = SQLite3::Database.new("db/slut-proj.db")
 
     delete_post(post_id)
 
     redirect('/valid')
 end
 
+# delete user
+#
+# @param[Integer] id, user_id to delete
+#
 post('/user/:id/delete')do
 
     user_id = params["id"]
@@ -149,8 +186,12 @@ post('/user/:id/delete')do
     redirect('/admin')
 end
 
+# Register new user
+#
+# @param[String] password, to check if empty
+# @param[String] username, to check if empty
+#
 post('/register')do
-    # db = SQLite3::Database.new("db/slut-proj.db")
     if params['password'].length || params['username'].length == 0
         slim(:error)
     end
@@ -162,8 +203,9 @@ post('/register')do
     redirect("/")
 end
 
+# delete users
+#
 post('/wipe_user')do
-    # db = SQLite3::Database.new("db/slut-proj.db")
 
     user_array = find_users_for_delete
     
@@ -173,6 +215,8 @@ post('/wipe_user')do
     redirect('/admin')
 end
 
+# delete posts
+#
 post('/wipe_post')do
 
     post_array = find_posts_for_delete
@@ -183,10 +227,18 @@ post('/wipe_post')do
     redirect('/admin')
 end
 
+# shows register page
+#
 post('/create')do
     slim(:register)
 end
 
+# Adds comment to post
+#
+# @param[String] comment, comment to add
+# @param[Integer] post_id, which post to add to
+# @param[String] route_name, remembers active page
+#
 post('/comment/:post_id/:route_name')do
 
     content = params["comment"]

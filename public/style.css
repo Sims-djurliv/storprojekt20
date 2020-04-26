@@ -91,6 +91,9 @@ a.home{
 a.home:hover{
     background: rgb(98, 112, 126);
 }
+a.home:active{
+    background: rgb(98, 112, 126);
+}
 a.my_page{
     grid-area: my-page;
     display: flex;
@@ -101,6 +104,9 @@ a.my_page{
     font-size: 20px;
 }
 a.my_page:hover{
+    background: rgb(98, 112, 126);
+}
+a.my_page:active{
     background: rgb(98, 112, 126);
 }
 .admin{
@@ -127,6 +133,9 @@ a.my_page:hover{
     margin-top: 28px;
 }
 .admin:hover{
+    background: rgb(98, 112, 126);
+}
+.admin:active{
     background: rgb(98, 112, 126);
 }
 .user{

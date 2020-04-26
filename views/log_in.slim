@@ -70,7 +70,8 @@ form action="/logg/#{session[:user_id]}/new" method="post"
             h4 = "Grade: #{item[4]} --------------------- Rating: #{item[5]}/10"
 
             hr
-            form action="/comment/#{item[1]}" method="post"
+            - route_name = "valid"
+            form action="/comment/#{item[1]}/#{route_name}" method="post"
                 textarea name="comment" cols="60" rows="2" placeholder="write a comment" 
                 input type="submit" value="submit"
 

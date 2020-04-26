@@ -18,7 +18,7 @@ end
 post('/login') do
     user_array = []
     user_exists = false
-    # db = SQLite3::Database.new("db/slut-proj.db")
+    
     db.results_as_hash = true
 
     username = params["username"]
@@ -58,8 +58,9 @@ end
 
 get('/admin')do
 
+    posts = get_all_accent_content
     users = get_all_user_content
-    slim(:admin, locals:{users:users})
+    slim(:admin, locals:{users:users, posts:posts})
 end
 
 get('/valid')do
@@ -91,8 +92,9 @@ get('/my_page')do
     end
     session[:amount_of_posts] = amount_of_posts
 
+    comment_content = get_all_comment_content()
     accent_content = get_all_accent_content()
-    slim(:my_page, locals:{accent:accent_content})
+    slim(:my_page, locals:{accent:accent_content, comment:comment_content})
 end
 
 post('/upload/:post_id')do
@@ -185,12 +187,17 @@ post('/create')do
     slim(:register)
 end
 
-post('/comment/:post_id')do
+post('/comment/:post_id/:route_name')do
 
     content = params["comment"]
     post_id = params["post_id"]
+    route_name = params["route_name"]
 
     insert_a_comment(content,post_id)
 
-    redirect('/valid')
+    if route_name == "valid"
+        redirect('/valid')
+    elsif route_name == "my_page"
+        redirect('/my_page')
+    end
 end

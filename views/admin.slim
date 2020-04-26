@@ -8,9 +8,18 @@ header.h-grid
         p.user signed in as: #{session[:username]}
         a.logout href="/logout" Logout
 
+hr
 form action="/wipe_post" method="post"
     input type="submit" value="wipe all posts"
 
+- if posts != nil
+    - posts.each do |item|
+        hr
+        p = "Route name: #{item[2]}"
+        form action="/lists/#{item[1]}/delete" method="post"
+            button type="submit" delete post
+        
+hr
 form action="/wipe_user" method="post"
     input type="submit" value="wipe all users"
 

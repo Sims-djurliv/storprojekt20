@@ -11,7 +11,7 @@ header.h-grid
         p.user signed in as: #{session[:username]}
         a.logout href="/logout" Logout
 
-form action="/logg/#{session[:user_id]}/new" method="post" 
+form action="/acsents/new" method="post" 
     input type="text" name="logg" placeholder="Route Name"
     input type="text" name="about_text" placeholder="info about send"
     select name="grade"
@@ -60,7 +60,7 @@ form action="/logg/#{session[:user_id]}/new" method="post"
             p.text = "#{item[3]}"
 
             - if session[:user_id] == item[0]
-                form action="/upload/#{item[1]}" method="post" enctype="multipart/form-data" accept="image/*" 
+                form action="/acsents/#{item[1]}/upload-image" method="post" enctype="multipart/form-data" accept="image/*" 
                     input type="file" name="file" placeholder="select file"
                     input type="submit" value="submit image"
 
@@ -70,8 +70,9 @@ form action="/logg/#{session[:user_id]}/new" method="post"
             h4 = "Grade: #{item[4]} --------------------- Rating: #{item[5]}/10"
 
             hr
-            - route_name = "valid"
-            form action="/comment/#{item[1]}/#{route_name}" method="post"
+            - session[:route_name] = "valid"
+            - # route_name = "valid"
+            form action="/ascents/#{item[1]}/comments" method="post"
                 textarea name="comment" cols="60" rows="2" placeholder="write a comment" 
                 input type="submit" value="submit"
 
@@ -80,5 +81,5 @@ form action="/logg/#{session[:user_id]}/new" method="post"
                     p = "#{select_correct_username(element[2])}: #{element[0]}"
 
             - if session[:user_id] == item[0]
-                form action="/lists/#{item[1]}/delete" method="post"
+                form action="/acsents/#{item[1]}/delete" method="post"
                     button type="submit" delete

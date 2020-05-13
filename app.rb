@@ -119,10 +119,10 @@ end
 # @param[String] filename, the image name
 # @param[Integer] post_id, post where uploaded
 #
-post('/upload/:post_id')do
+post('/acsents/:postid/upload-image')do 
     image = params["file"]
     name = image["filename"]
-    post_id = params["post_id"]
+    post_id = params["postid"]
     session[:name] = name
     
     tempfile = params[:file][:tempfile]
@@ -142,18 +142,18 @@ end
 # Makes new post
 #
 # @param[String] logg, name of route
-# @param[Integer] id, user_id
 # @param[String] about_text, post description
 # @param[String] grade, route grade
 # @param[Integer] rating, route rating
 #
-post('/logg/:id/new')do
+post('/acsents/new')do
 
     route = params["logg"]
-    user_id = params["id"]
     about = params["about_text"]
     grade = params["grade"]
     rating = params["rating"]
+
+    user_id = session[:user_id]
     
     make_new_post(user_id, route, about, grade, rating)
 
@@ -164,7 +164,7 @@ end
 #
 # @param[Integer] id, post_id to delete
 #
-post('/lists/:id/delete')do
+post('/acsents/:id/delete')do
 
     post_id = params["id"]
 
@@ -177,7 +177,7 @@ end
 #
 # @param[Integer] id, user_id to delete
 #
-post('/user/:id/delete')do
+post('/users/:id/delete')do
 
     user_id = params["id"]
 
@@ -191,7 +191,7 @@ end
 # @param[String] password, to check if empty
 # @param[String] username, to check if empty
 #
-post('/register')do
+post('/users')do
     if params['password'].length || params['username'].length == 0
         slim(:error)
     end
@@ -205,7 +205,7 @@ end
 
 # delete users
 #
-post('/wipe_user')do
+post('/users/delete-all')do
 
     user_array = find_users_for_delete
     
@@ -217,7 +217,7 @@ end
 
 # delete posts
 #
-post('/wipe_post')do
+post('/acsents/delete-all')do
 
     post_array = find_posts_for_delete
         
@@ -229,7 +229,7 @@ end
 
 # shows register page
 #
-post('/create')do
+get('/users/new')do
     slim(:register)
 end
 
@@ -237,13 +237,12 @@ end
 #
 # @param[String] comment, comment to add
 # @param[Integer] post_id, which post to add to
-# @param[String] route_name, remembers active page
 #
-post('/comment/:post_id/:route_name')do
+post('/ascents/:postid/comments')do
 
     content = params["comment"]
-    post_id = params["post_id"]
-    route_name = params["route_name"]
+    post_id = params["postid"]
+    route_name = session[:route_name]
 
     insert_a_comment(content,post_id)
 

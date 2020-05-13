@@ -9,25 +9,25 @@ header.h-grid
         a.logout href="/logout" Logout
 
 hr
-form action="/wipe_post" method="post"
+form action="/acsents/delete-all" method="post"
     input type="submit" value="wipe all posts"
 
 - if posts != nil
     - posts.each do |item|
         hr
         p = "Route name: #{item[2]}"
-        form action="/lists/#{item[1]}/delete" method="post"
+        form action="/acsents/#{item[1]}/delete" method="post"
             button type="submit" delete post
         
 hr
-form action="/wipe_user" method="post"
+form action="/users/delete-all" method="post"
     input type="submit" value="wipe all users"
 
 - if users != nil
     - users.each do |item|
         hr
         p = "user: #{item[1]}"
-        form action="/user/#{item[0]}/delete" method="post"
+        form action="/users/#{item[0]}/delete" method="post"
             button type="submit" delete user
         
            

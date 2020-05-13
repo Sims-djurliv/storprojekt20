@@ -80,6 +80,8 @@ form action="/acsents/new" method="post"
                 - if element[1] == item[1]
                     p = "#{select_correct_username(element[2])}: #{element[0]}"
 
+            - session[:post_belongs_to] = item[0]
+            
             - if session[:user_id] == item[0]
                 form action="/acsents/#{item[1]}/delete" method="post"
                     button type="submit" delete

@@ -1,0 +1,3 @@
+#Domänbeskrivning
+
+Denna application är till för att publicera nya accents(det är en slags bestigning, eller någon ny klätter rutt som man har klarat) till ett forum, och syftet är att betygsätta och dela med sig om klätteruplevelsen. Till detta forum ska man kunna skapa en egen användare. Vissa användare har admin åtkommst och kan då ta bort valfria användare och inlägg. På applicationen kan man kolla på andra användares accents och själv lägga upp nya. På inlägg ska man också kunna kommentera. 

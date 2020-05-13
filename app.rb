@@ -166,6 +166,10 @@ end
 #
 post('/acsents/:id/delete')do
 
+    if session[:user_id] != session[:post_belongs_to]
+        redirect('/valid')
+    end
+
     post_id = params["id"]
 
     delete_post(post_id)
